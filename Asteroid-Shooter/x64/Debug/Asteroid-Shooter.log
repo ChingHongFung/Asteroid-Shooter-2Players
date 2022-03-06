@@ -1,0 +1,38 @@
+﻿  Asteroid-Shooter.cpp
+C:\Users\asus\Desktop\Portfolio Projects\Asteroid-Shooter\Asteroid-Shooter\olcConsoleGameEngine.h(759,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\asus\Desktop\Portfolio Projects\Asteroid-Shooter\Asteroid-Shooter\olcConsoleGameEngine.h(1099,1): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\asus\Desktop\Portfolio Projects\Asteroid-Shooter\Asteroid-Shooter\olcConsoleGameEngine.h(1196,1): warning C4312: 'type cast': conversion from 'DWORD' to 'olcConsoleGameEngine *' of greater size
+C:\Users\asus\Desktop\Portfolio Projects\Asteroid-Shooter\Asteroid-Shooter\Asteroid-Shooter.cpp(143,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\asus\Desktop\Portfolio Projects\Asteroid-Shooter\Asteroid-Shooter\Asteroid-Shooter.cpp(145,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\asus\Desktop\Portfolio Projects\Asteroid-Shooter\Asteroid-Shooter\Asteroid-Shooter.cpp(182,28): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\asus\Desktop\Portfolio Projects\Asteroid-Shooter\Asteroid-Shooter\Asteroid-Shooter.cpp(182,23): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\asus\Desktop\Portfolio Projects\Asteroid-Shooter\Asteroid-Shooter\Asteroid-Shooter.cpp(188,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\asus\Desktop\Portfolio Projects\Asteroid-Shooter\Asteroid-Shooter\Asteroid-Shooter.cpp(214,28): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\asus\Desktop\Portfolio Projects\Asteroid-Shooter\Asteroid-Shooter\Asteroid-Shooter.cpp(214,23): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\asus\Desktop\Portfolio Projects\Asteroid-Shooter\Asteroid-Shooter\Asteroid-Shooter.cpp(220,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\asus\Desktop\Portfolio Projects\Asteroid-Shooter\Asteroid-Shooter\Asteroid-Shooter.cpp(385,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\asus\Desktop\Portfolio Projects\Asteroid-Shooter\Asteroid-Shooter\Asteroid-Shooter.cpp(410,191): warning C4244: 'argument': conversion from '_Ty2' to 'int', possible loss of data
+          with
+          [
+              _Ty2=float
+          ]
+C:\Users\asus\Desktop\Portfolio Projects\Asteroid-Shooter\Asteroid-Shooter\Asteroid-Shooter.cpp(410,147): warning C4244: 'argument': conversion from '_Ty1' to 'int', possible loss of data
+          with
+          [
+              _Ty1=float
+          ]
+C:\Users\asus\Desktop\Portfolio Projects\Asteroid-Shooter\Asteroid-Shooter\Asteroid-Shooter.cpp(410,102): warning C4244: 'argument': conversion from '_Ty2' to 'int', possible loss of data
+          with
+          [
+              _Ty2=float
+          ]
+C:\Users\asus\Desktop\Portfolio Projects\Asteroid-Shooter\Asteroid-Shooter\Asteroid-Shooter.cpp(410,58): warning C4244: 'argument': conversion from '_Ty1' to 'int', possible loss of data
+          with
+          [
+              _Ty1=float
+          ]
+C:\Users\asus\Desktop\Portfolio Projects\Asteroid-Shooter\Asteroid-Shooter\Asteroid-Shooter.cpp(428,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\asus\Desktop\Portfolio Projects\Asteroid-Shooter\Asteroid-Shooter\Asteroid-Shooter.cpp(428,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\asus\Desktop\Portfolio Projects\Asteroid-Shooter\Asteroid-Shooter\Asteroid-Shooter.cpp(429,40): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\asus\Desktop\Portfolio Projects\Asteroid-Shooter\Asteroid-Shooter\Asteroid-Shooter.cpp(429,36): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Asteroid-Shooter.vcxproj -> C:\Users\asus\Desktop\Portfolio Projects\Asteroid-Shooter\x64\Debug\Asteroid-Shooter.exe
