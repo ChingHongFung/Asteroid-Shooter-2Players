@@ -19,6 +19,8 @@ Each object in space is formed of a struct named sSpaceObject that has attribute
 ### Linear Algebra: Affine Transformation
 To simulate the movement of the spaceships, we utilise basic linear algebra to perform affine transformation of the ship models. This allows rotation, scaling and translation of objects to create the visual effect of the ships floating and moving in space. By applying basic kinematics laws, the motion of spaceships could be manipulated through steering of and thrust provided by the ships.
 
+### Challenger Mode: 2 Players
+An extension to the traditional asteroids games is that I added in a multiplayer mode. This allows two players to simultaneously control their spaceships using the keyboard to compete in this game. A scoring system is used to track the players' performance and displayed in the console.
 
 ## Demo Videos
 
