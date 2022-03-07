@@ -1,3 +1,4 @@
+
 // Asteroid-Shooter.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
@@ -35,9 +36,12 @@ private:
     sSpaceObject player2;
     int nScore1 = 0;
     int nScore2 = 0;
+    int level = 1;
+    float speed = 5;
     bool bDead1 = false;
     bool bDead2 = false;
     bool bStart = true;
+    bool bLevelUp = false;
     vector<pair<float, float>> vecModelShip;
     vector<pair<float, float>> vecModelAsteroid;
 
@@ -69,22 +73,40 @@ protected:
         if (bStart)
         {
             Fill(0, 0, ScreenWidth(), ScreenHeight(), PIXEL_SOLID, 0);
-            DrawString(ScreenWidth() / 2 - 13, ScreenHeight() / 2 - 10, L"Welcome to Asteroids");
-            DrawString(ScreenWidth() / 2 - 15, ScreenHeight() / 2 - 5, L"Press Space Bar to Start");
-            DrawString(ScreenWidth() / 2 - 35, ScreenHeight() / 2 + 5, L"Player 1 Controls:");
-            DrawString(ScreenWidth() / 2 - 35, ScreenHeight() / 2 + 8, L"W - Accelerate");
-            DrawString(ScreenWidth() / 2 - 35, ScreenHeight() / 2 + 11, L"A - Turn Left");
-            DrawString(ScreenWidth() / 2 - 35, ScreenHeight() / 2 + 14, L"D - Turn Right");
-            DrawString(ScreenWidth() / 2 - 35, ScreenHeight() / 2 + 17, L"F - Shoot");
-            DrawString(ScreenWidth() / 2 + 15, ScreenHeight() / 2 + 5, L"Player 2 Controls:");
-            DrawString(ScreenWidth() / 2 + 15, ScreenHeight() / 2 + 8, L"Up - Accelerate");
-            DrawString(ScreenWidth() / 2 + 15, ScreenHeight() / 2 + 11, L"Left - Turn Left");
-            DrawString(ScreenWidth() / 2 + 15, ScreenHeight() / 2 + 14, L"Right - Turn Right");
-            DrawString(ScreenWidth() / 2 + 15, ScreenHeight() / 2 + 17, L"0 - Shoot");
-            if (m_keys[VK_SPACE].bHeld)
-                bStart = false;
-                ResetGame();
+            if (!bLevelUp)
+            {
+                DrawString(ScreenWidth() / 2 - 10, ScreenHeight() / 2 - 10, L"Welcome to Asteroids");
+                DrawString(ScreenWidth() / 2 - 14, ScreenHeight() / 2 - 5, L"Press Space Bar to Continue");
+                DrawString(ScreenWidth() / 2 - 35, ScreenHeight() / 2 + 3, L"Player 1 Controls:");
+                DrawString(ScreenWidth() / 2 - 35, ScreenHeight() / 2 + 8, L"W - Accelerate");
+                DrawString(ScreenWidth() / 2 - 35, ScreenHeight() / 2 + 11, L"A - Turn Left");
+                DrawString(ScreenWidth() / 2 - 35, ScreenHeight() / 2 + 14, L"D - Turn Right");
+                DrawString(ScreenWidth() / 2 - 35, ScreenHeight() / 2 + 17, L"F - Shoot");
+                DrawString(ScreenWidth() / 2 + 15, ScreenHeight() / 2 + 3, L"Player 2 Controls:");
+                DrawString(ScreenWidth() / 2 + 15, ScreenHeight() / 2 + 8, L"Up - Accelerate");
+                DrawString(ScreenWidth() / 2 + 15, ScreenHeight() / 2 + 11, L"Left - Turn Left");
+                DrawString(ScreenWidth() / 2 + 15, ScreenHeight() / 2 + 14, L"Right - Turn Right");
+                DrawString(ScreenWidth() / 2 + 15, ScreenHeight() / 2 + 17, L"0 - Shoot");
+                if (m_keys[VK_SPACE].bReleased)
+                {
+                    bLevelUp = true;
+                }
+            }
+            else
+            {
+                DrawString(ScreenWidth() / 2 - 7, ScreenHeight() / 2 - 10, L"Level: " + to_wstring(level));
+                DrawString(ScreenWidth() / 2 - 14, ScreenHeight() / 2 - 5, L"Press Space Bar to Start");
+                DrawString(ScreenWidth() / 2 - 35, ScreenHeight() / 2 + 3, L"PLAYER1 SCORE: " + to_wstring(nScore1));
+                DrawString(ScreenWidth() / 2 + 15, ScreenHeight() / 2 + 3, L"PLAYER2 SCORE: " + to_wstring(nScore2));
+                if (m_keys[VK_SPACE].bReleased)
+                {
+                    bStart = false;
+                    bLevelUp = false;
+                    ResetGame();
+                }
+            }
         }
+
         // Restart game by pressing space bar
         else if (bDead1 && bDead2)
         {
@@ -92,9 +114,14 @@ protected:
             DrawString(ScreenWidth() / 2 - 7, ScreenHeight() / 2 - 5, L"Game Over");
             DrawString(ScreenWidth() / 2 - 15, ScreenHeight() / 2 + 5, L"Press Space Bar to Restart");
             if (m_keys[VK_SPACE].bHeld)
+            {
+                nScore1 = 0;
+                nScore2 = 0;
+                speed = 5;
                 ResetGame();
+            }
         }
-        else 
+        else
         {
             // Clear Screen
             Fill(0, 0, ScreenWidth(), ScreenHeight(), PIXEL_SOLID, 0);
@@ -133,16 +160,22 @@ protected:
             player2.y += player2.dy * fElapsedTime;
 
             // Keep ships wrapping around frame
-            WrapCoordinates(player1.x, player1.y, player1.x, player1.y);
-            WrapCoordinates(player2.x, player2.y, player2.x, player2.y);
+            WrapCoordinates(player1.x, player1.y, player1.x, player1.y, false);
+            WrapCoordinates(player2.x, player2.y, player2.x, player2.y, false);
 
             // Check ship collision with asteroids
             for (auto& a : vecAsteroids)
             {
                 if (IsPointInsideCircle(a.x, a.y, a.nSize, player1.x, player1.y))
+                {
+                    player1.x = -100;
                     bDead1 = true;
+                }
                 if (IsPointInsideCircle(a.x, a.y, a.nSize, player2.x, player2.y))
+                {
+                    player2.x = -100;
                     bDead2 = true;
+                }    
             }
 
             // ASTEROID SECTION
@@ -154,7 +187,7 @@ protected:
                 a.angle += 0.5f * fElapsedTime;
 
                 // Keep asteroid wrapping around frame
-                WrapCoordinates(a.x, a.y, a.x, a.y);
+                WrapCoordinates(a.x, a.y, a.x, a.y, false);
                 DrawWireFrameModel(vecModelAsteroid, a.x, a.y, a.angle, (float)a.nSize, FG_GREY);
             }
 
@@ -268,55 +301,14 @@ protected:
             // Finished hitting a round of asteroids; generate new ones
             if (vecAsteroids.empty())
             {
-                // If ship is alive when a round of asteroids eliminated; add to its score
-                if (!bDead1)
-                    nScore1 += 1000;
-                if (!bDead2)
-                    nScore2 += 1000;
-
-                // Position new asteroids at an offset away from current ship position
-                // If only one ship alive, then position them to the left and right of the ship based on its orientation
-                if (bDead1 && !bDead2) {
-                    vecAsteroids.push_back({ 30.0f * sinf(player2.angle - 3.14159f / 2.0f) + player2.x,
-                                        30.0f * cosf(player2.angle - 3.14159f / 2.0f) + player2.y,
-                                        10.0f * sinf(player2.angle),
-                                        10.0f * cosf(player2.angle),
-                                        (int)16, 0.0f });
-                    vecAsteroids.push_back({ 30.0f * sinf(player2.angle + 3.14159f / 2.0f) + player2.x,
-                                        30.0f * cosf(player2.angle + 3.14159f / 2.0f) + player2.y,
-                                        10.0f * sinf(-player2.angle),
-                                        10.0f * cosf(-player2.angle),
-                                        (int)16, 0.0f });
-                }
-                if (!bDead1 && bDead2) {
-                    vecAsteroids.push_back({ 30.0f * sinf(player1.angle - 3.14159f / 2.0f) + player1.x,
-                                        30.0f * cosf(player1.angle - 3.14159f / 2.0f) + player1.y,
-                                        10.0f * sinf(player1.angle),
-                                        10.0f * cosf(player1.angle),
-                                        (int)16, 0.0f });
-                    vecAsteroids.push_back({ 30.0f * sinf(player1.angle + 3.14159f / 2.0f) + player1.x,
-                                        30.0f * cosf(player1.angle + 3.14159f / 2.0f) + player1.y,
-                                        10.0f * sinf(-player1.angle),
-                                        10.0f * cosf(-player1.angle),
-                                        (int)16, 0.0f });
-                }
-                // If both ships alive, then position them an offset perpendicular to the segment that join the two ships
-                if (!bDead1 && !bDead2)
-                {
-                    float midx = (player1.x + player2.x) / 2.0f;
-                    float midy = (player1.y + player2.y) / 2.0f;
-                    float anglexy = atanf((player2.y - player1.y) / (player2.x - player1.x));
-                    vecAsteroids.push_back({ 30.0f * sinf(anglexy) + midx,
-                                             30.0f * cosf(-anglexy) + midy,
-                                             10.0f * sinf(anglexy),
-                                             10.0f * cosf(anglexy),
-                                             (int)16, 0.0f });
-                    vecAsteroids.push_back({ 30.0f * sinf(-anglexy) + midx,
-                                             30.0f * cosf(anglexy) + midy,
-                                             10.0f * sinf(-anglexy),
-                                             10.0f * cosf(-anglexy),
-                                             (int)16, 0.0f });
-                }
+                if (bDead1)
+                    nScore1 -= 1000;
+                if (bDead1)
+                    nScore2 -= 1000;
+                bStart = true;
+                bLevelUp = true;
+                level += 1;
+                speed *= 1.5;
             }
 
             // Draw ship if still alive
@@ -335,8 +327,8 @@ protected:
             else
                 DrawString(ScreenWidth() - 26, 2, L"PLAYER2 DEAD, SCORE: " + to_wstring(nScore2));
         }
-        
-           
+
+
         return true;
     }
 
@@ -348,18 +340,24 @@ protected:
         vecBullets2.clear();
 
         // Initialise asteroids
-        vecAsteroids.push_back({ 20.0f, 20.0f, 8.0f, -6.0f, (int)16, 0.0f });
-        vecAsteroids.push_back({ 100.0f, 20.0f, -5.0f, 3.0f, (int)16, 0.0f });
+        for (int i = 0; i < (1 + (rand() % 4)); i++)
+        {
+            float pos_x = 0 + (rand() % ScreenWidth());
+            float pos_y = 0 + (rand() % ScreenHeight() / 2.0f);
+            float vel_x = (rand() % 3 - 1) * speed;
+            float vel_y = (rand() % 3 - 1) * speed;
+            vecAsteroids.push_back({ pos_x, pos_y, vel_x , vel_y, (int)16, 0.0f });
+        }
 
         // Initialise player
-        player1.x = ScreenWidth() / 4.0f;
-        player1.y = ScreenHeight() * 3.0f / 4.0f;
+        player1.x = ScreenWidth() / 5.0f;
+        player1.y = ScreenHeight() * 4.0f / 5.0f;
         player1.dx = 0.0f;
         player1.dy = 0.0f;
         player1.angle = 0.0f;
 
-        player2.x = ScreenWidth() * 3.0f / 4.0f;
-        player2.y = ScreenHeight() * 3.0f / 4.0f;
+        player2.x = ScreenWidth() * 4.0f / 5.0f;
+        player2.y = ScreenHeight() * 4.0f / 5.0f;
         player2.dx = 0.0f;
         player2.dy = 0.0f;
         player2.angle = 0.0f;
@@ -367,8 +365,6 @@ protected:
         // Reset alive status and scores
         bDead1 = false;
         bDead2 = false;
-        nScore1 = 0;
-        nScore2 = 0;
     }
 
     bool IsPointInsideCircle(float cx, float cy, float radius, float x, float y)
@@ -410,21 +406,31 @@ protected:
         }
     }
 
-    void WrapCoordinates(float ix, float iy, float& ox, float& oy)
+    void WrapCoordinates(float ix, float iy, float& ox, float& oy, bool avoidInit)
     {
         // Wrap positioning of object back onto game space if drifted off the edges
         ox = ix;
         oy = iy;
-        if (ix < 0.0f) ox = ix + (float)ScreenWidth();
-        if (ix >= (float)ScreenWidth()) ox = ix - (float)ScreenWidth();
-        if (iy < 0.0f) oy = iy + (float)ScreenHeight();
-        if (iy >= (float)ScreenHeight()) oy = iy - (float)ScreenHeight();
+        if (!avoidInit)
+        {
+            if (ix < 0.0f) ox = ix + (float)ScreenWidth();
+            if (ix >= (float)ScreenWidth()) ox = ix - (float)ScreenWidth();
+            if (iy < 0.0f) oy = iy + (float)ScreenHeight();
+            if (iy >= (float)ScreenHeight()) oy = iy - (float)ScreenHeight();
+        }
+        else 
+        {   
+            if (ix < 0.0f) ox = ix + (float)ScreenWidth();
+            if (ix >= (float)ScreenWidth()) ox = ix - (float)ScreenWidth();
+            if (iy < 0.0f) oy = iy + (float)ScreenHeight() / 2.0f;
+            if (iy >= (float)ScreenHeight() / 2.0f) oy = iy - (float)ScreenHeight() / 2.0f;
+        }
     }
 
     virtual void Draw(int x, int y, short c = 0x2588, short col = 0x000F)
     {
         float fx, fy;
-        WrapCoordinates(x, y, fx, fy);
+        WrapCoordinates(x, y, fx, fy, false);
         olcConsoleGameEngine::Draw(fx, fy, c, col);
     }
 };
